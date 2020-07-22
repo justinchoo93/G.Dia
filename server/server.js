@@ -39,7 +39,7 @@ const addGame = async (req, res, next) => {
   }
 };
 
-app.post('/add', addGame, (req, res) => {
+app.post('/api/add', addGame, (req, res) => {
   res.status(200).send('added successfully');
 });
 
@@ -63,7 +63,7 @@ const findGame = async (req, res, next) => {
     });
   }
 };
-app.get('/games/:name', findGame, (req, res) => {
+app.get('/api/games/:name', findGame, (req, res) => {
   res.status(200).json(res.locals.gameList);
 });
 
@@ -83,7 +83,7 @@ const getAllGames = async (req, res, next) => {
   }
 };
 
-app.get('/games', getAllGames, (req, res) => {
+app.get('/api/games', getAllGames, (req, res) => {
   res.status(200).json(res.locals.gameList);
 });
 

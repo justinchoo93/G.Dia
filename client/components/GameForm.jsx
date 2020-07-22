@@ -45,7 +45,7 @@ const GameForm = () => {
     };
     // console.log('data', data);
     axios
-      .post('/add', data)
+      .post('/api/add', data)
       .then((response) => {
         console.log(response);
         setSubmitted(true);

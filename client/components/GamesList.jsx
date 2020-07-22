@@ -10,7 +10,7 @@ const GamesList = () => {
 
   useEffect(() => {
     const fetchGames = async () => {
-      const results = await axios.get(`/games/${query}`);
+      const results = await axios.get(`/api/games/${query}`);
       // console.log('results', results.data);
 
       setGames(results.data);
