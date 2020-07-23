@@ -9,7 +9,7 @@ const gameSchema = new mongoose.Schema({
   platform: { type: String, required: true },
 
   // maybe make genres an array?
-  genre: { type: String, required: true },
+  genre: { type: Array, required: true },
 
   imageURL: String,
 

@@ -1,12 +1,49 @@
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import {
+  TextField,
+  Grid,
+  makeStyles,
+  InputLabel,
+  MenuItem,
+  Select,
+  Checkbox,
+  FormGroup,
+  FormControl,
+  FormControlLabel,
+  Button,
+} from '@material-ui/core';
 import axios from 'axios';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '50ch',
+    },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 50,
+  },
+}));
 
 const GameForm = () => {
   // initial state
   const [gameName, setGameName] = useState('');
-  const [platform, setPlatform] = useState('PC');
-  const [genre, setGenre] = useState('');
+  const [platform, setPlatform] = useState('');
+  const [genre, setGenre] = useState({
+    action: false,
+    adventure: false,
+    mmorpg: false,
+    strategy: false,
+    puzzle: false,
+    shooter: false,
+    rythm: false,
+    survival: false,
+    sports: false,
+  });
   const [imageURL, setImageURL] = useState('');
   const [review, setReview] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -20,9 +57,6 @@ const GameForm = () => {
       case 'gamePlatform':
         setPlatform(value);
         break;
-      case 'gameGenre':
-        setGenre(value);
-        break;
       case 'gameImage':
         setImageURL(value);
         break;
@@ -32,6 +66,9 @@ const GameForm = () => {
       default:
         console.log('not working');
     }
+  };
+  const handleCheckChange = (e) => {
+    setGenre({ ...genre, [e.target.name]: e.target.checked });
   };
 
   const handleSubmit = (e) => {
@@ -57,89 +94,179 @@ const GameForm = () => {
 
   const handleAddAnother = () => {
     setGameName('');
-    setPlatform('PC');
-    setGenre('');
+    setPlatform('');
+    setGenre({});
     setImageURL('');
     setReview('');
     setSubmitted(false);
   };
 
+  const classes = useStyles();
+
   // if submitted is true, we'll show submitted successfully phrase
   // if false, render the form page
   return submitted ? (
-    <div className="submittedContainer">
+    <Grid container direction="row" justify="center" alignItems="center">
       <h3> Submitted successfully! Thank you</h3>
+      <br />
       <button onClick={handleAddAnother}>Add another game</button>
-    </div>
+    </Grid>
   ) : (
-    <form className="gameForm" onSubmit={handleSubmit}>
-      <label>
-        Game Name:
-        <br />
-        <input
-          type="text"
+    <Grid container direction="row" justify="center" alignItems="center">
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <TextField
           id="gameName"
           name="gameName"
+          label="Game Name"
           value={gameName}
           onChange={handleInputChange}
         />
-      </label>
-      <br />
-      <label>
-        Game Platform:
+        <FormControl className={classes.formControl}>
+          <InputLabel id="GamePlatformLabel">Game Platform</InputLabel>
+          <Select
+            labelId="GamePlatformLabel"
+            id="gamePlatform"
+            name="gamePlatform"
+            value={platform}
+            onChange={handleInputChange}
+          >
+            <MenuItem value="PC">PC</MenuItem>
+            <MenuItem value="PS4">PS4</MenuItem>
+            <MenuItem value="XBox One">XBox One</MenuItem>
+            <MenuItem value="Nintendo Switch">Nintendo Switch</MenuItem>
+          </Select>
+        </FormControl>
         <br />
-        <select
-          id="gamePlatform"
-          name="gamePlatform"
-          value={platform}
-          onChange={handleInputChange}
-        >
-          <option value="PC">PC</option>
-          <option value="PS4">PS4</option>
-          <option value="XBox One">XBox One</option>
-          <option value="Nintendo Switch">Nintendo Switch</option>
-        </select>
-      </label>
-      <br />
-      <label>
-        Game Genre:
+
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.action}
+                onChange={handleCheckChange}
+                name="action"
+                color="primary"
+              />
+            }
+            label="Action"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.adventure}
+                onChange={handleCheckChange}
+                name="adventure"
+                color="primary"
+              />
+            }
+            label="Adventure"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.mmorpg}
+                onChange={handleCheckChange}
+                name="mmorpg"
+                color="primary"
+              />
+            }
+            label="MMORPG"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.strategy}
+                onChange={handleCheckChange}
+                name="strategy"
+                color="primary"
+              />
+            }
+            label="Strategy"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.puzzle}
+                onChange={handleCheckChange}
+                name="puzzle"
+                color="primary"
+              />
+            }
+            label="Puzzle"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.shooter}
+                onChange={handleCheckChange}
+                name="shooter"
+                color="primary"
+              />
+            }
+            label="Shooter"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.rythm}
+                onChange={handleCheckChange}
+                name="rythm"
+                color="primary"
+              />
+            }
+            label="Rythm"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.survival}
+                onChange={handleCheckChange}
+                name="survival"
+                color="primary"
+              />
+            }
+            label="Survival"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={genre.sports}
+                onChange={handleCheckChange}
+                name="sports"
+                color="primary"
+              />
+            }
+            label="Sports"
+          />
+        </FormGroup>
         <br />
-        <input
-          type="text"
-          id="gameGenre"
-          placeholder="ex) action, adventure, puzzle, etc... "
-          name="gameGenre"
-          value={genre}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-      <label>
-        Game Image(optional):
-        <br />
-        <input
-          type="text"
+        <TextField
           id="gameImage"
           name="gameImage"
+          label="Game Image URL (optional)"
           value={imageURL}
           onChange={handleInputChange}
         />
-      </label>
-      <br />
-      <label>
-        Write a Review:
         <br />
-        <input
-          type="text"
+        <TextField
           id="gameReview"
           name="gameReview"
+          label="gameReview"
           value={review}
           onChange={handleInputChange}
         />
-      </label>
-      <br />
-      <input type="submit" value="Submit" />
-    </form>
+
+        <br />
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
+      </form>
+    </Grid>
   );
 };
 

@@ -28,7 +28,19 @@ const addGame = async (req, res, next) => {
   try {
     // console.log('req body: ', req.body);
     const { gameName, platform, genre, imageURL, review } = req.body;
-    await Game.create({ gameName, platform, genre, imageURL, review });
+
+    const genreArray = Object.keys(genre).filter((el) => {
+      return genre[el];
+    });
+    // console.log('genreArray', genreArray);
+    const createdData = await Game.create({
+      gameName,
+      platform,
+      genre: genreArray,
+      imageURL,
+      review,
+    });
+    res.locals.createdData = createdData;
     next();
   } catch (error) {
     next({
@@ -40,10 +52,9 @@ const addGame = async (req, res, next) => {
 };
 
 app.post('/api/add', addGame, (req, res) => {
-  res.status(200).send('added successfully');
+  res.status(200).json(res.locals.createdData);
 });
 
-// GET games with search parameters
 // middleware for finding games with specific params
 // params will come from query variable in useEffect which originates from search component
 const findGame = async (req, res, next) => {
@@ -63,11 +74,7 @@ const findGame = async (req, res, next) => {
     });
   }
 };
-app.get('/api/games/:name', findGame, (req, res) => {
-  res.status(200).json(res.locals.gameList);
-});
 
-// GET request to my games
 // middleware to get all games
 const getAllGames = async (req, res, next) => {
   try {
@@ -83,6 +90,31 @@ const getAllGames = async (req, res, next) => {
   }
 };
 
+// DELETE request for specific game id
+const deleteGame = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    // console.log('id', id);
+    await Game.findByIdAndDelete(id);
+    next();
+  } catch (error) {
+    next({
+      log: `error occurred at deleteGame middleware. error message is: ${error}`,
+      status: 400,
+      message: { err: 'An error occurred' },
+    });
+  }
+};
+
+app.get('/api/games/:name', findGame, (req, res) => {
+  res.status(200).json(res.locals.gameList);
+});
+
+app.delete('/api/games/:id', deleteGame, getAllGames, (req, res) => {
+  res.status(200).json(res.locals.gameList);
+});
+
+// GET request to my games
 app.get('/api/games', getAllGames, (req, res) => {
   res.status(200).json(res.locals.gameList);
 });
