@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import {
   TextField,
   Grid,
@@ -27,9 +29,18 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 50,
   },
+
+  gridContainer: {
+    paddingTop: '80px',
+  },
+
+  buttonPadding: {
+    paddingRight: '5px',
+    paddingLeft: '5px',
+  },
 }));
 
-const GameForm = () => {
+const GameForm = (props) => {
   // initial state
   const [gameName, setGameName] = useState('');
   const [platform, setPlatform] = useState('');
@@ -101,18 +112,54 @@ const GameForm = () => {
     setSubmitted(false);
   };
 
+  const handleClickToMyGames = () => {
+    console.log('props.history', props.history);
+    props.history.push('/games');
+  };
+
   const classes = useStyles();
 
   // if submitted is true, we'll show submitted successfully phrase
   // if false, render the form page
   return submitted ? (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      className={classes.gridContainer}
+      direction="column"
+      justify="center"
+      alignItems="center"
+    >
       <h3> Submitted successfully! Thank you</h3>
-      <br />
-      <button onClick={handleAddAnother}>Add another game</button>
+
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Button
+          variant="contained"
+          onClick={handleAddAnother}
+          color="primary"
+          className={classes.buttonPadding}
+        >
+          Add another game
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClickToMyGames}
+          className={classes.buttonPadding}
+        >
+          My Games
+        </Button>
+      </Grid>
+
+      {/* <button onClick={handleAddAnother}>Add another game</button> */}
     </Grid>
   ) : (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      className={classes.gridContainer}
+      direction="column"
+      justify="center"
+      alignItems="center"
+    >
       <form
         className={classes.root}
         noValidate

@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
       width: '100ch',
     },
   },
+  gridContainer: {
+    paddingTop: '80px',
+  },
 }));
 
 const Search = ({ games, getQuery }) => {
@@ -22,7 +25,13 @@ const Search = ({ games, getQuery }) => {
     getQuery(q);
   };
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      className={classes.gridContainer}
+    >
       <form className={classes.root} noValidate autoComplete="off">
         <TextField
           id="outlined-search"

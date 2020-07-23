@@ -75,6 +75,23 @@ const findGame = async (req, res, next) => {
   }
 };
 
+const findGameById = async (req, res, next) => {
+  try {
+    console.log(req.params);
+    const { id } = req.params;
+    console.log('id', id);
+    const specificGames = await Game.findById(id);
+    res.locals.gameForUpdate = specificGames;
+    next();
+  } catch (error) {
+    next({
+      log: `error occurred at findGameById middleware. error message is: ${error}`,
+      status: 400,
+      message: { err: 'An error occurred' },
+    });
+  }
+};
+
 // middleware to get all games
 const getAllGames = async (req, res, next) => {
   try {
@@ -105,6 +122,42 @@ const deleteGame = async (req, res, next) => {
     });
   }
 };
+
+// UPDATE request for specific game id
+const updateGame = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { gameName, platform, genre, imageURL, review } = req.body;
+    console.log('req.body: ', req.body);
+    res.locals.updatedGame = await Game.findByIdAndUpdate(
+      id,
+      {
+        gameName,
+        platform,
+        genre,
+        imageURL,
+        review,
+      },
+      { new: true, useFindAndModify: true }
+    );
+
+    next();
+  } catch (error) {
+    next({
+      log: `error occurred at updateGame middleware. error message is: ${error}`,
+      status: 400,
+      message: { err: 'An error occurred' },
+    });
+  }
+};
+
+app.put('/api/edit/:id', updateGame, (req, res) => {
+  res.status(200).json(res.locals.updatedGame);
+});
+
+app.get('/api/edit/:id', findGameById, (req, res) => {
+  res.status(200).json(res.locals.gameForUpdate);
+});
 
 app.get('/api/games/:name', findGame, (req, res) => {
   res.status(200).json(res.locals.gameList);

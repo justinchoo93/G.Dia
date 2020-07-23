@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { makeStyles, Grid } from '@material-ui/core';
 import GameItem from './GameItem.jsx';
 import Search from './Search.jsx';
+
+const useStyles = makeStyles({
+  gridContainer: {
+    paddingLeft: '40px',
+    paddingRight: '20px',
+    paddingTop: '40px',
+  },
+});
 
 const GamesList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,36 +30,37 @@ const GamesList = () => {
   }, [query]);
 
   const handleDelete = async (i) => {
-    console.log('id in game list', i);
+    // console.log('id in game list', i);
     const results = await axios.delete(`/api/games/${i}`);
     // console.log('results.data', results.data);
     setGames(results.data);
   };
 
-  const gameArray = games.map((game) => {
-    return (
-      <GameItem
-        key={game._id}
-        id={game._id}
-        gameName={game.gameName}
-        platform={game.platform}
-        genre={game.genre}
-        imageURL={game.imageURL}
-        review={game.review}
-        handleDelete={(i) => {
-          handleDelete(i);
-        }}
-      />
-    );
-  });
+  const classes = useStyles();
 
   return isLoading ? (
     <div>Loading... Please Wait...</div>
   ) : (
-    <section className="gameList">
+    <>
       <Search getQuery={(q) => setQuery(q)} games={games} />
-      {gameArray}
-    </section>
+      <Grid container spacing={2} className={classes.gridContainer}>
+        {games.map((game) => (
+          <Grid key={game._id} item xs={12} s={6} md={3}>
+            <GameItem
+              id={game._id}
+              gameName={game.gameName}
+              platform={game.platform}
+              genre={game.genre}
+              imageURL={game.imageURL}
+              review={game.review}
+              handleDelete={(i) => {
+                handleDelete(i);
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 };
 

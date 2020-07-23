@@ -26,7 +26,7 @@ const Home = (props) => {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar>
         <Tabs value={selectedTab} onChange={handleChange}>
           <Tab label="My Games" />
           <Tab label="Add Games" />
