@@ -31,48 +31,57 @@ const GameItem = ({
   const [selectedId, setselectedId] = useState('');
 
   const onDelete = (i) => {
-    // setselectedId(i);
-    console.log('selectdID', i);
+    setselectedId(i);
+    console.log('id', i);
     handleDelete(i);
   };
 
   const genreString = genre.join(', ');
   const classes = useStyles();
-  console.log('ids', id);
+  // console.log('ids', id);
 
   return (
-    // <div className="gameItem">
-    //   <p>Game: {gameName}</p>
-    //   <p>platform: {platform}</p>
-    //   <p>genre: {genreString}</p>
-    //   <p>imageURL: {imageURL}</p>
-    //   <p>review: {review}</p>
-    //   <button id={id}>Edit</button>
-    //   <button id={id} onClick={(e) => onDelete(e.target.id)}>
-    //     Delete
-    //   </button>
-    // </div>
-    <Card className={classes.root}>
-      <CardActionArea>
+    //   <div className="gameItem">
+    //     <p>Game: {gameName}</p>
+    //     <p>platform: {platform}</p>
+    //     <p>genre: {genreString}</p>
+    //     <p>imageURL: {imageURL}</p>
+    //     <p>review: {review}</p>
+    //     <button id={id}>Edit</button>
+    //     <button id={id} onClick={(e) => onDelete(e.target.id)}>
+    //       Delete
+    //     </button>
+    //   </div>
+    // );
+    <Card className={classes.root} id={id}>
+      <CardActionArea id={id}>
         <CardMedia className={classes.media} src={imageURL} title={gameName} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {gameName}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
+            <strong>Platform: </strong>
             {platform}
+            <br />
+            <strong>Genre: </strong>
+            {genreString}
+            <br />
+            <strong>Review: </strong>
+            {review}
+            <br />
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions id={id}>
         <Button size="small" color="primary">
           Edit
         </Button>
         <Button
           size="small"
-          color="primary"
+          color="secondary"
           id={id}
-          onClick={(e) => onDelete(e.target.id)}
+          onClick={(e) => onDelete(e.currentTarget.id)}
         >
           Delete
         </Button>
