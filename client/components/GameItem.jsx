@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import {
   makeStyles,
   Card,
@@ -8,6 +10,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  Grid,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -41,56 +44,54 @@ const GameItem = ({
   console.log('imageURL', imageURL);
 
   return (
-    //   <div className="gameItem">
-    //     <p>Game: {gameName}</p>
-    //     <p>platform: {platform}</p>
-    //     <p>genre: {genreString}</p>
-    //     <p>imageURL: {imageURL}</p>
-    //     <p>review: {review}</p>
-    //     <button id={id}>Edit</button>
-    //     <button id={id} onClick={(e) => onDelete(e.target.id)}>
-    //       Delete
-    //     </button>
-    //   </div>
-    // );
-    <Card className={classes.root} id={id}>
-      <CardActionArea id={id}>
-        <CardMedia
-          className={classes.media}
-          image={imageURL}
-          title={gameName}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {gameName}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <strong>Platform: </strong>
-            {platform}
-            <br />
-            <strong>Genre: </strong>
-            {genreString}
-            <br />
-            <strong>Review: </strong>
-            {review}
-            <br />
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions id={id}>
-        <Button size="small" color="primary">
-          Edit
-        </Button>
-        <Button
-          size="small"
-          color="secondary"
-          id={id}
-          onClick={(e) => onDelete(e.currentTarget.id)}
-        >
-          Delete
-        </Button>
-      </CardActions>
-    </Card>
+    <Grid container>
+      <Grid item xs={12} sm={6} md={4} spacing={4}>
+        <Card className={classes.root} raised id={id}>
+          <CardActionArea id={id}>
+            <CardMedia
+              className={classes.media}
+              image={imageURL}
+              title={gameName}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {gameName}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <strong>Platform: </strong>
+                {platform}
+                <br />
+                <strong>Genre: </strong>
+                {genreString}
+                <br />
+                <strong>Review: </strong>
+                {review}
+                <br />
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions id={id}>
+            <Button
+              id={id}
+              size="small"
+              color="primary"
+              component={Link}
+              to={`/edit/${id}`}
+            >
+              Edit
+            </Button>
+            <Button
+              size="small"
+              color="secondary"
+              id={id}
+              onClick={(e) => onDelete(e.currentTarget.id)}
+            >
+              Delete
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    </Grid>
   );
 };
 

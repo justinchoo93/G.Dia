@@ -7,7 +7,6 @@ const GamesList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [games, setGames] = useState([]);
   const [query, setQuery] = useState('');
-  const [id, setId] = useState('');
 
   useEffect(() => {
     const fetchGames = async () => {
