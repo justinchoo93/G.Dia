@@ -22,7 +22,7 @@ const GamesList = () => {
   }, [query]);
 
   const handleDelete = async (i) => {
-    // console.log('id in game list', i);
+    console.log('id in game list', i);
     const results = await axios.delete(`/api/games/${i}`);
     // console.log('results.data', results.data);
     setGames(results.data);
