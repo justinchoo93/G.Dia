@@ -256,7 +256,7 @@ const GameForm = () => {
         <TextField
           id="gameReview"
           name="gameReview"
-          label="gameReview"
+          label="Game Review"
           value={review}
           onChange={handleInputChange}
         />

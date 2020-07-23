@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: 160,
   },
 });
 
@@ -38,7 +38,7 @@ const GameItem = ({
 
   const genreString = genre.join(', ');
   const classes = useStyles();
-  // console.log('ids', id);
+  console.log('imageURL', imageURL);
 
   return (
     //   <div className="gameItem">
@@ -55,7 +55,11 @@ const GameItem = ({
     // );
     <Card className={classes.root} id={id}>
       <CardActionArea id={id}>
-        <CardMedia className={classes.media} src={imageURL} title={gameName} />
+        <CardMedia
+          className={classes.media}
+          image={imageURL}
+          title={gameName}
+        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {gameName}
