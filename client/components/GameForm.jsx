@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
   TextField,
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GameForm = (props) => {
   // initial state
+  const history = useHistory();
   const [gameName, setGameName] = useState('');
   const [platform, setPlatform] = useState('');
   const [genre, setGenre] = useState({
@@ -111,10 +112,10 @@ const GameForm = (props) => {
     setReview('');
     setSubmitted(false);
   };
-
+  // console.log('props', props);
   const handleClickToMyGames = () => {
-    console.log('props.history', props.history);
     props.history.push('/games');
+    // console.log('props after')
   };
 
   const classes = useStyles();
@@ -143,7 +144,7 @@ const GameForm = (props) => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={handleClickToMyGames}
+          onClick={() => history.push('/')}
           className={classes.buttonPadding}
         >
           My Games

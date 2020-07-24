@@ -33,7 +33,7 @@ const Home = (props) => {
         </Tabs>
       </AppBar>
       {selectedTab === 0 && <GamesList />}
-      {selectedTab === 1 && <GameForm />}
+      {selectedTab === 1 && <GameForm {...props} />}
     </>
   );
 };

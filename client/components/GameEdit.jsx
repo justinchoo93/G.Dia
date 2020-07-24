@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   TextField,
   Grid,
@@ -41,8 +42,11 @@ const GameEdit = (props) => {
   const { match } = props;
   const { params } = match;
 
+  const history = useHistory();
+
   // state
   const [retrievedGame, setRetrievedGame] = useState({});
+  const [changeSubmitted, setChangeSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -78,7 +82,7 @@ const GameEdit = (props) => {
   // handle genre checks
   const handleCheckChange = () => {};
   // make a put request
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const { gameName, platform, genre, imageURL, review } = retrievedGame;
     e.preventDefault();
     const data = {
@@ -88,12 +92,14 @@ const GameEdit = (props) => {
       imageURL,
       review,
     };
-    axios
+    await axios
       .put(`/api/edit/${params.id}`, data)
       .then((response) => console.log('response after change', response))
       .catch((err) => {
         console.log('submit put request error: ', err);
       });
+
+    history.push('/');
   };
 
   const classes = useStyles();
