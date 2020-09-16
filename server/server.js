@@ -15,7 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/gameapp', {
 // serve static files under public folder
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '../public')));
+app.use(express.static(path.resolve(__dirname, '../dist')));
 
 // GET request to add characters
 // app.get('/add', (req, res) => {
