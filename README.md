@@ -2,7 +2,7 @@
 
 ## About
 
-We often play amazing games and forget about them. I wanted to create a platform where you can leave detailed game reviews for record keeping purposes. G.Dia is a web platform where one can review games he/she played for future reference.
+We often play amazing games and want to share the excitement with others. I wanted to create a platform where users can leave detailed game reviews and share them with other gamers.
 
 Please note that the application is still in development and will continue to make updates.
 
@@ -32,6 +32,10 @@ Please note that the application is still in development and will continue to ma
 4. Start server
 
 `npm start`
+
+### User Interface
+
+![UI](/assets/UI.png)
 
 ## Contributing Guidelines
 
